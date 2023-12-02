@@ -1,6 +1,6 @@
-abstract class Sensor {
+public abstract class Sensor {
     abstract String getUnit();
     abstract double getValue();
     abstract String getName();
-    abstract void doMeasurement();
+    abstract double doMeasurement();
 }

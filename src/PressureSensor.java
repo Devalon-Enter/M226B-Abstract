@@ -1,14 +1,15 @@
+
 abstract class PressureSensor extends Sensor {
-    private String unit;
+    private final String unit = "Bar";
     protected double measurementValue;
 
     @Override
     double getValue() {
-        return measurementValue;
+        return this.measurementValue;
     }
 
     @Override
     public String getUnit() {
-        return unit;
+        return this.unit;
     }
 }

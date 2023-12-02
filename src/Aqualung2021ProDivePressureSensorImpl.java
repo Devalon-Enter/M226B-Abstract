@@ -1,12 +1,12 @@
 import java.util.Random;
 
-public class Barometric1000PressureSensorImpl extends PressureSensor {
-    private final String name = "Barometric1000PressureSensorImpl";
+public class Aqualung2021ProDivePressureSensorImpl extends PressureSensor {
+    private final String name = "Aqualung2021ProDivePressureSensorImpl";
 
     @Override
     double doMeasurement() {
         Random random = new Random();
-        measurementValue = 0.5 + (random.nextDouble() * 0.56);
+        measurementValue = random.nextDouble() * 10.0;
         return measurementValue;
     }
 
