@@ -2,6 +2,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.time.DateTimeException;
 import java.util.Date;
 import java.util.List;
@@ -13,18 +14,15 @@ import static java.lang.Thread.sleep;
 
 public class CsvWriter implements Runnable{
 
-    private static final Object lock = new Object();
     private String fileName;
     private Sensor sensor;
     private File file;
-    private BufferedWriter outputStream;
 
     public CsvWriter(String fileName, Sensor sensor) {
         this.fileName = fileName+".csv";
         this.sensor = sensor;
 
         createFile(fileName+".csv");
-        initializeWriter();
     }
 
     public void createFile(String fileName) {
@@ -41,18 +39,12 @@ public class CsvWriter implements Runnable{
         }
     }
 
-    private void initializeWriter() {
-        try {
-            outputStream = new BufferedWriter(new FileWriter(fileName, true)); // Use append mode
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public void writeToFile(String sensorName, String unit, Date timeStamp, double measuredValue) {
         System.out.println("Entered writeToFile");
         try {
             if (file.getName().equals(fileName)) {
+                BufferedWriter outputStream = new BufferedWriter(new FileWriter(fileName, true));
                 outputStream.write(sensorName + ",");
                 outputStream.write(unit + ",");
                 outputStream.write(timeStamp + ",");
@@ -87,15 +79,4 @@ public class CsvWriter implements Runnable{
                 System.out.println("After writeToFile");
     }
 
-    // Add this method to close the writer when necessary
-    public void closeWriter() {
-        try {
-            if (outputStream != null) {
-                outputStream.close();
-                System.out.println("Closed writer");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
